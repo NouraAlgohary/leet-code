@@ -1,0 +1,30 @@
+class Solution {
+public:
+    vector<vector<string>> suggestedProducts(vector<string>& products, string searchWord) {
+        vector<vector<string>> suggested_products;
+        vector<string>product;
+        vector<string>::iterator lower, upper;
+        string s;
+    
+        sort(products.begin(),products.end());
+        //no. searching
+        for(int i = 1;i<=searchWord.size();i++)
+        {
+            //search substring
+            s = searchWord.substr(0,i);
+            lower = lower_bound(products.begin(),products.end(),s);
+            
+
+            while(lower!=products.end()&&product.size()<3)
+            {
+                if(s==(*lower).substr(0,i))
+                    product.push_back(*lower);
+                else break;
+                lower+=1;
+            }
+            suggested_products.push_back(product);
+            product.clear();
+        }
+        return suggested_products;
+    }
+};
