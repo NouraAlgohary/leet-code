@@ -1,0 +1,20 @@
+class Solution {
+public:
+    int minimumLengthEncoding(vector<string>& words) {
+        sort(words.begin(),words.end(), sortByLen);
+        string word = words[0]+'#';
+        
+        for(int i=1;i<words.size();i++)
+        {
+            if(word.find(words[i]+'#')==-1) {word+=words[i]+'#';
+                                             cout<<words[i]<<endl;}
+        }
+        
+        return word.size();
+    }
+    
+    private:
+    static bool sortByLen(string &a,string &b){
+        return a.size()>b.size();
+    }
+};
