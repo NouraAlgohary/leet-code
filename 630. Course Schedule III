@@ -1,0 +1,32 @@
+class Solution {
+public:
+    int scheduleCourse(vector<vector<int>>& courses) {
+        int days_taken = 0;
+        priority_queue<int>pq;
+        
+        //sorting the courses by lastDay to get the important first
+        sort(courses.begin(), courses.end(), sortBySecond);
+        
+        for(auto course: courses)
+        {
+            days_taken += course[0];
+            pq.push(course[0]);
+            
+            //If a course's lastDay comes before finishing it...
+            if(days_taken > course[1])
+            {
+            //1.Remove the course that has the longest duration's duration added before
+                days_taken -= pq.top();
+            //2.Take it out from the queue 
+                pq.pop();
+            }
+            
+        }
+        //Now, Our queue contains the collection of courses' durations that give "the maximum               number of courses that you can take"
+        return pq.size();
+    }
+    
+    static bool sortBySecond(vector<int> a, vector<int> b) {
+        return a[1]<b[1];
+ }
+};
