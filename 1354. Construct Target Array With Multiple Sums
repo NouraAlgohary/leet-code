@@ -1,0 +1,26 @@
+class Solution {
+public:
+    bool isPossible(vector<int>& target) {
+        priority_queue <int> pq;
+        long long sm = 0;
+        int old = 0;
+        
+        for(auto it: target)
+        {
+            pq.push(it);
+            sm+=it;
+        }
+        
+        while(pq.top()!=1)
+        {
+            sm-=pq.top();
+            if(sm == 0 || sm>=pq.top()) return false;
+            old = pq.top()%sm;
+            if(sm != 1 && old == 0) return false;
+            pq.pop();
+            pq.push(old);
+            sm += old;
+        }
+        return true;
+    }
+};
