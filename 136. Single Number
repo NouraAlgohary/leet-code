@@ -1,0 +1,11 @@
+class Solution {
+public:
+    int singleNumber(vector<int>& nums) {
+        vector<int>v;
+        for(int i: nums)
+            if(find(v.begin(),v.end(),i)!=v.end()) v.erase(find(v.begin(),v.end(),i));
+            else v.push_back(i);
+        
+        return v[0];
+    }
+};
