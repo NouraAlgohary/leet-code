@@ -1,0 +1,51 @@
+class Solution {
+public:
+    int minDeletions(string s) {
+        vector<int>v;
+        set<int>st;
+        int cnt = 1, i= 1, deleted = 0;
+        
+        //sort string to get every series of the same char together
+        sort(s.begin(),s.end());
+        
+        for(;i<s.size();i++)
+        {
+            //count number of appearance of the same char
+            if(s[i]==s[i-1]) cnt++;
+            
+            //new char appeared
+            else {
+                //push the freq/count of the previous char
+                v.push_back(cnt);
+                //start counting from one for new char 
+                cnt = 1;
+            }
+        }
+        //push the final cnt found
+        v.push_back(cnt);
+        
+        //iterate vector from end
+        i = v.size()-1;
+        while(i>=0)
+        {
+            //freq inserted before
+            if(st.find(v[i])!=st.end()) 
+            {
+                //delete 1 and repeat cheking by not changing i 
+                v[i]-=1; deleted++;
+            }
+            else 
+            {
+                //a char can't appear zero times
+                if(v[i]==0) 
+                {
+                i--; continue;
+                }
+                //insert if it's a new freq and not zero
+                st.insert(v[i]); i--;
+            }
+        }
+        
+        return deleted;
+    }
+};
