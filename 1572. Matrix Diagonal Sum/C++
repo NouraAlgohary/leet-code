@@ -1,0 +1,13 @@
+class Solution {
+public:
+    int diagonalSum(vector<vector<int>>& mat) {
+        int n = mat.size(), sm=0;
+        for(int i=0;i<n;i++)
+        {
+            sm+=mat[i][i];
+            if(i != ((n-1)/2.0))
+                sm+=mat[i][n-i-1];
+        }
+        return sm;
+    }
+};
