@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int repeatedNTimes(vector<int>& nums) {
+        map<int,int> mp;
+        int mx=0,num=0;
+        for(int i:nums)
+        { 
+            if(mp.count(i))
+                 mp[i]+=1;
+            else 
+                mp.insert(make_pair(i,1));
+        }
+        
+        for(auto it:mp)
+        {
+            if(it.second > mx)
+            {  num = it.first;
+               mx = it.second;
+            }
+        }
+        
+        return num;
+    }
+};
