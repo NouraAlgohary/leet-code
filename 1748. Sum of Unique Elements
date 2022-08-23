@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int sumOfUnique(vector<int>& nums) {
+        sort(nums.begin(),nums.end());
+        int sm = 0,i=1;
+        
+        
+        if(nums.size()>1)
+        {
+        if(nums[0]!=nums[1]) sm+=nums[0];
+        for(;i<nums.size()-1;i++)
+        {
+            if(nums[i]!=nums[i+1] && nums[i]!=nums[i-1]) sm+=nums[i];
+        }
+        if(nums[i]!=nums[i-1]) sm+=nums[i];
+        }
+        else 
+        return nums[0];
+
+        return sm;
+    }
+};
