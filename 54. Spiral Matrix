@@ -1,0 +1,57 @@
+class Solution {
+public:
+    vector<int> spiralOrder(vector<vector<int>>& matrix) {
+        vector<int> orderedMatrix;
+
+        int row = 0, col = 0, lowRowLimit = 0, highRowLimit = matrix.size() - 1, lowColLimit = 0, highColLimit = matrix[0].size() - 1;
+        int path = 0;
+
+        while(orderedMatrix.size() != matrix.size() * matrix[0].size())
+        {
+            orderedMatrix.push_back(matrix[row][col]);
+
+            if(path == 0)
+            {
+                if(col == highColLimit)
+                {
+                    lowRowLimit++;
+                    path = 1;
+                    row++;
+                    continue;
+                }
+                col++;
+            }else if (path == 1)
+            {
+                if(row == highRowLimit)
+                {
+                    highRowLimit--;
+                    path = 2;
+                    col--;
+                    continue;
+                }
+                row++;
+            }else if(path == 2)
+            {
+                if(col == lowColLimit)
+                {
+                    lowColLimit++;
+                    path = 3;
+                    row--;
+                    continue;
+                }
+                col--;
+            }else
+            {
+                if(row == lowRowLimit)
+                {
+                    highColLimit--;
+                    path = 0;
+                    col++;
+                    continue;
+                }
+                row--;
+            }
+        }
+ return orderedMatrix;
+    }
+};
