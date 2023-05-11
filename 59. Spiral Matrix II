@@ -1,0 +1,58 @@
+class Solution {
+public:
+    vector<vector<int>> generateMatrix(int n) {
+        vector<vector<int>> matrix(n, vector<int> (n, 0));
+
+        int num = 1;
+        int row = 0, col = 0, highColLimit = n - 1, highRowLimit= n - 1, lowColLimit = 0,      lowRowLimit = 0, path = 0;
+
+        while(num < (n * n + 1))
+        {
+            matrix[row][col] = num;
+            num++;
+
+            if(path == 0)
+            {
+                if(col == highColLimit)
+                {
+                    lowRowLimit++;
+                    path = 1;
+                    row++;
+                    continue;
+                }
+                col++;
+            }else if (path == 1)
+            {
+                if(row == highRowLimit)
+                {
+                    highRowLimit--;
+                    path = 2;
+                    col--;
+                    continue;
+                }
+                row++;
+            }else if(path == 2)
+            {
+                if(col == lowColLimit)
+                {
+                    lowColLimit++;
+                    path = 3;
+                    row--;
+                    continue;
+                }
+                col--;
+            }else
+            {
+                if(row == lowRowLimit)
+                {
+                    highColLimit--;
+                    path = 0;
+                    col++;
+                    continue;
+                }
+                row--;
+        }
+        }
+        return matrix;
+    }
+};
