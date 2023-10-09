@@ -1,0 +1,48 @@
+class Solution {
+    int FindLowerBound(vector<int>& nums, int target)
+    {
+        int left = 0, right = nums.size(), mid, lower = -1;
+        while(left < right)
+        {
+            mid = (left+right)/2;
+
+            if(target > nums[mid])
+                left = mid + 1;
+            else if(target == nums[mid])
+            {
+                lower = mid;
+                right = mid; 
+            }
+            else
+                right = mid;
+        }
+        return lower;
+    }
+    int FindUpperBound(vector<int>& nums, int target)
+    {
+        int left = 0, right = nums.size(), mid, upper = -1;
+        while(left < right)
+        {
+            mid = (left+right)/2;
+
+            if(target >= nums[mid])
+            {   left = mid + 1;
+                if(target == nums[mid])
+                    upper = mid;
+            }
+            else
+                right = mid;
+        }
+        return upper;
+    }
+public:
+    vector<int> searchRange(vector<int>& nums, int target) {
+        int lower = FindLowerBound(nums, target);
+        int upper = -1;
+
+        if(lower != -1)
+        upper = FindUpperBound(nums, target);        
+
+        return {lower, upper};
+    }
+};
