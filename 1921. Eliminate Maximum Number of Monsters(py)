@@ -1,0 +1,15 @@
+class Solution:
+    def eliminateMaximum(self, dist: List[int], speed: List[int]) -> int:
+        arrive_time = []
+        n = len(dist)
+
+        for i in range(n):
+            arrive_time.append((dist[i] - 1)/speed[i])
+
+        arrive_time = sorted(arrive_time)
+
+        for i in range(n):
+            if arrive_time[i] < i:
+                return i
+
+        return n
