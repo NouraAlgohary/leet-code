@@ -1,0 +1,15 @@
+class Solution {
+public:
+    bool isReachableAtTime(int sx, int sy, int fx, int fy, int t) {
+        int x = abs(fx - sx), y = abs(fy - sy);
+
+        if(abs(fx - sx) == 0 && abs(fy - sy)==0 && t<2 && t==1)
+            return false;
+        else if(abs(fx - sx)>abs(fy - sy) && abs(fx - sx) <= t)
+            return true;
+        else if(abs(fx - sx)<=abs(fy - sy) && abs(fy - sy) <= t)
+            return true;
+
+        return false;
+    }
+};
