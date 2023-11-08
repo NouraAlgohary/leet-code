@@ -1,0 +1,10 @@
+class Solution:
+    def isReachableAtTime(self, sx: int, sy: int, fx: int, fy: int, t: int) -> bool:
+        if(abs(sx-fx) == 0 and abs(sy - fy) == 0  and t==1):
+            return False
+        elif abs(sx-fx) > abs(sy - fy) and abs(sx-fx) <= t:
+            return True
+        elif abs(sx-fx) <= abs(sy - fy) and abs(sy - fy) <= t:
+            return True
+
+        return False
