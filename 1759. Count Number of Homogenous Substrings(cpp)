@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int countHomogenous(string s) {
+        int total_cnt = s.size(), prev_cnt = 1;
+
+        for(int i=1;i<s.size();i++)
+        {
+            if(s[i] == s[i-1])
+            {
+                total_cnt= (total_cnt + prev_cnt ) % (1000000007);
+                prev_cnt ++;
+            }
+            else
+            prev_cnt = 1;
+        }
+
+        return total_cnt;
+    }
+};
