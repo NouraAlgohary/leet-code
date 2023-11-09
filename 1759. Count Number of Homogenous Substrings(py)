@@ -1,0 +1,13 @@
+class Solution:
+    def countHomogenous(self, s: str) -> int:
+        total_cnt = len(s)
+        prev_cnt = 1
+
+        for i in range(1, len(s)):
+            if s[i] == s[i-1]: 
+                total_cnt= (total_cnt + prev_cnt ) % 1000000007
+                prev_cnt += 1
+            else:
+                prev_cnt = 1
+
+        return total_cnt
