@@ -1,0 +1,47 @@
+class Solution {
+public:
+void dfs(unordered_map<int, bool>& visited, unordered_map<int,vector<int>>& adj, int node,  vector<int>& elements)
+{
+    for(auto i:adj[node])
+    {
+         cout<<"i:  "<<i<<endl;
+        if(!visited[i])
+            {
+            elements.push_back(i);
+            visited[i] = 1;
+            dfs(visited, adj, i, elements);
+            }
+    }
+}
+    vector<int> restoreArray(vector<vector<int>>& adjacentPairs) {
+        int first_element = 0;
+        unordered_map<int, bool>visited;
+        unordered_map<int,vector<int>>adj;
+
+        vector<int>elements;
+
+        for(auto i: adjacentPairs)
+        {
+            adj[i[0]].push_back(i[1]);
+            adj[i[1]].push_back(i[0]);
+        }
+
+        // find the first element
+        for(auto i:adj)
+        {
+            if(i.second.size() == 1)
+                {
+                    first_element = i.first;
+                    break;
+                }
+
+        }
+
+        //depth first search
+        visited[first_element] = 1;
+        elements.push_back(first_element);
+        dfs(visited, adj, first_element, elements);
+
+        return elements;
+    }
+};
