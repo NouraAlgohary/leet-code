@@ -1,0 +1,8 @@
+SELECT new_table.Department, new_table.Employee, new_table.salary
+FROM (
+    SELECT d.name AS Department, e.name AS Employee, e.salary, DENSE_RANK() OVER(PARTITION BY e.departmentId ORDER BY e.salary DESC) AS DS
+    FROM  Employee e 
+    JOIN Department d 
+    ON e.departmentId = d.id
+) AS new_table
+WHERE DS = 1
