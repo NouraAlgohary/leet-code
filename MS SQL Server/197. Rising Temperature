@@ -1,0 +1,10 @@
+/* Write your T-SQL query statement below */
+WITH newTable AS(
+    SELECT id, recordDate, temperature, LAG(recordDate) OVER (ORDER BY recordDate) AS prev_recorddate, LAG(temperature) OVER (ORDER BY recordDate) AS prev_temperature
+    FROM Weather
+)
+
+SELECT id
+FROM newTable
+WHERE temperature > prev_temperature 
+AND prev_recorddate = DATEADD(day, -1, recordDate);
