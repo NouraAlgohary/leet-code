@@ -1,0 +1,7 @@
+WITH ranking AS(
+    SELECT id, RANK() OVER (PARTITION BY email ORDER BY id) AS r 
+    FROM Person 
+    )
+
+DELETE FROM Person
+WHERE id IN (SELECT id FROM ranking WHERE r > 1)
