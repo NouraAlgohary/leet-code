@@ -1,0 +1,29 @@
+/* Write your T-SQL query statement below */
+WITH newTable AS(
+    SELECT LAG(id) OVER (ORDER BY id) AS first_id, 
+    LAG(visit_date) OVER (ORDER BY id)AS first_date,
+    LAG(people) OVER (ORDER BY id) AS first_people,
+    id AS second_id, visit_date AS second_date, people AS second_people,
+    LEAD(id) OVER (ORDER BY id) AS third_id, 
+    LEAD(visit_date) OVER (ORDER BY id) AS third_date,
+    LEAD(people) OVER (ORDER BY id) AS third_people
+    FROM Stadium
+)
+
+SELECT DISTINCT first_id AS id,  first_date AS visit_date, first_people AS people
+FROM newTable
+WHERE first_id + 1 = second_id AND
+second_id + 1 = third_id AND
+first_people >= 100 AND second_people >=100 AND third_people >=100
+UNION
+SELECT DISTINCT second_id AS id, second_date AS visit_date, second_people AS people
+FROM newTable
+WHERE first_id + 1 = second_id AND
+second_id + 1 = third_id AND
+first_people >= 100 AND second_people >=100 AND third_people >=100
+UNION
+SELECT DISTINCT third_id AS id, third_date AS visit_date, third_people AS people
+FROM newTable
+WHERE first_id + 1 = second_id AND
+second_id + 1 = third_id AND
+first_people >= 100 AND second_people >=100 AND third_people >=100
