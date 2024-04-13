@@ -1,0 +1,11 @@
+/* Write your T-SQL query statement below */
+SELECT DISTINCT employee_id
+FROM Employees
+UNION 
+SELECT DISTINCT employee_id
+FROM Salaries
+EXCEPT
+SELECT e.employee_id
+FROM Employees e
+JOIN Salaries s
+ON e.employee_id = s.employee_id
