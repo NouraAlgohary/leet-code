@@ -1,0 +1,21 @@
+/* Write your T-SQL query statement below */
+WITH countsTable AS(
+SELECT mng.id, mng.[name] AS [name], COUNT(mng.[id]) AS cnt
+FROM Employee emp
+JOIN Employee mng
+ON emp.managerId = mng.id
+GROUP BY mng.id, mng.[name]
+)
+SELECT [name]
+FROM countsTable
+WHERE cnt >= 5
+
+/*--------------------------------------------------------------------ANOTHER SOLUTION--------------------------------------------------------------------*/
+
+/* Write your T-SQL query statement below */
+SELECT mng.name
+FROM Employee mng
+JOIN Employee emp
+ON mng.id = emp.managerId
+GROUP BY mng.id, mng.name
+HAVING COUNT(mng.id) >= 5
