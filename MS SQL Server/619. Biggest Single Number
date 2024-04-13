@@ -1,0 +1,23 @@
+/* Write your T-SQL query statement below */
+SELECT MAX(num) AS num
+FROM (SELECT num 
+        FROM MyNumbers
+        GROUP BY num
+        HAVING COUNT(num) = 1
+        ) AS newtable
+
+
+/*------------------------------------------------------ANOTHER SOLUTION------------------------------------------------*/
+
+/* Write your T-SQL query statement below */
+SELECT TOP 1
+CASE
+    WHEN num IS NOT NULL THEN 
+    (SELECT TOP 1 num
+    FROM MyNumbers
+    GROUP BY num
+    HAVING COUNT(num) = 1
+    ORDER BY num DESC)
+    ELSE NULL
+END AS num
+FROM MyNumbers
