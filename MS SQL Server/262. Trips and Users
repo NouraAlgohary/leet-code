@@ -1,0 +1,25 @@
+WITH cancelled AS (
+    SELECT request_at AS [Day], COUNT(*) AS cancelled_count
+    FROM Trips t
+    JOIN Users clients ON clients.users_id = t.client_id
+    JOIN Users drivers ON drivers.users_id = t.driver_id
+    WHERE t.status IN ('cancelled_by_client', 'cancelled_by_driver') 
+    AND clients.banned = 'No'
+    AND drivers.banned = 'No'
+    GROUP BY request_at
+),
+total AS (
+    SELECT request_at AS [Day], COALESCE(COUNT(*), 0) AS total_count
+    FROM Trips t
+    JOIN Users clients ON clients.users_id = t.client_id
+    JOIN Users drivers ON drivers.users_id = t.driver_id
+    WHERE request_at BETWEEN '2013-10-01' AND '2013-10-03'
+    AND clients.banned = 'No'
+    AND drivers.banned = 'No'
+    GROUP BY request_at
+)
+SELECT DISTINCT(total.[Day]), 
+CONVERT(decimal(10, 2), COALESCE(SUM(cancelled.cancelled_count), 0) * 1.0 / COALESCE(SUM(total.total_count), 0))AS [Cancellation Rate]
+FROM total
+LEFT JOIN cancelled ON total.[Day] = cancelled.[Day]
+GROUP BY total.[Day]
