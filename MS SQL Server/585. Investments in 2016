@@ -1,0 +1,37 @@
+WITH tiv_2015_more_than_one AS (
+    SELECT 
+        tiv_2015, 
+        COUNT(tiv_2015) AS tiv_count
+    FROM 
+        Insurance 
+    GROUP BY 
+        tiv_2015
+    HAVING 
+        COUNT(tiv_2015) > 1
+), 
+unique_lat_lon AS (
+    SELECT 
+        lat, 
+        lon
+    FROM 
+        Insurance
+    GROUP BY 
+        lat, lon
+    HAVING 
+        COUNT(*) = 1
+)
+SELECT 
+    ROUND(SUM(i.tiv_2016) * 1.0, 2) AS tiv_2016
+FROM 
+    Insurance i
+WHERE 
+    i.tiv_2015 IN (SELECT tiv_2015 FROM tiv_2015_more_than_one)
+AND EXISTS (
+        SELECT 1 
+        FROM 
+            unique_lat_lon ul 
+        WHERE 
+            i.lat = ul.lat 
+        AND 
+            i.lon = ul.lon
+    );
