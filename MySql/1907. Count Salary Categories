@@ -1,0 +1,16 @@
+# Write your MySQL query statement below
+WITH x AS
+(SELECT IF(income < 20000, "Low Salary", IF(income BETWEEN 20000 AND 50000, "Average Salary", "High Salary")) AS category
+FROM Accounts)
+
+SELECT "Low Salary" AS category, IF(COUNT(category) IS NULL, 0, COUNT(category) ) AS accounts_count
+FROM x
+WHERE category = "Low Salary"
+UNION ALL
+SELECT "Average Salary" AS category, IF(COUNT(category) IS NULL, 0, COUNT(category) ) AS accounts_count
+FROM x
+WHERE category = "Average Salary"
+UNION ALL
+SELECT "High Salary" AS category, IF(COUNT(category) IS NULL, 0, COUNT(category) ) AS accounts_count
+FROM x
+WHERE category = "High Salary"
