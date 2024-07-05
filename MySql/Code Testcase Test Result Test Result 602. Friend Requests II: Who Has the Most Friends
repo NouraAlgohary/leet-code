@@ -1,0 +1,12 @@
+# Write your MySQL query statement below
+WITH x AS (SELECT requester_id AS id
+FROM RequestAccepted
+union all 
+SELECT accepter_id AS id
+FROM RequestAccepted)
+
+SELECT id, count(id) AS num
+FROM x
+GROUP BY id
+ORDER BY num DESC
+LIMIT 1
