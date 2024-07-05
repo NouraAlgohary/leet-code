@@ -1,0 +1,26 @@
+# Write your MySQL query statement below
+SELECT (SELECT DISTINCT salary
+FROM Employee ORDER BY salary DESC LIMIT 1 OFFSET 1) AS SecondHighestSalary
+
+# --------------------------
+
+# Write your MySQL query statement below
+SELECT (SELECT DISTINCT salary
+FROM (SELECT salary, DENSE_RANK() OVER(ORDER BY salary DESC) AS rnk 
+FROM Employee) AS rnk_salary
+WHERE rnk = 2) AS SecondHighestSalary
+
+# --------------------------
+
+# Write your MySQL query statement below
+SELECT MAX(salary) AS SecondHighestSalary
+FROM Employee
+WHERE salary < (SELECT MAX(salary) FROM Employee)
+
+# --------------------------
+
+# Write your MySQL query statement below
+SELECT IFNULL((SELECT DISTINCT salary 
+FROM Employee
+ORDER BY salary DESC 
+LIMIT 1 OFFSET 1), NULL) as SecondHighestSalary 
